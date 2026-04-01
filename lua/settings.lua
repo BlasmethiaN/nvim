@@ -47,20 +47,11 @@ map("n", "<Esc>", ":nohlsearch<CR>", opts)
 -- Reload file
 map("n", leader .. "R", ":edit<CR>", opts)
 
--- CHADTree (pokud ho stále používáš)
-map("n", leader .. "n", ":CHADopen --always-focus<CR>", opts)
-
 -- Disable arrow keys
 map({ "n", "i", "v" }, "<Up>", "<nop>", opts)
 map({ "n", "i", "v" }, "<Down>", "<nop>", opts)
 map({ "n", "i", "v" }, "<Left>", "<nop>", opts)
 map({ "n", "i", "v" }, "<Right>", "<nop>", opts)
-
--- LSP mappings
-map("n", "gd", vim.lsp.buf.definition, opts)
-map("n", "gr", vim.lsp.buf.rename, opts)
-map("n", "gh", vim.lsp.buf.hover, opts)
-map("n", leader .. "f", function() vim.lsp.buf.format({ async = true }) end, opts)
 
 -- Telescope mappings
 map("n", leader .. "tp", ":Telescope find_files<CR>", opts)

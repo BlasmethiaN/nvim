@@ -26,18 +26,24 @@ return {
             vim.keymap.set(mode, keys, func, { buffer = buf, desc = "LSP: " .. desc })
           end
 
-          -- Mappings
-          map("K", vim.lsp.buf.hover, "Hover Documentation")
-          map("<space>rn", vim.lsp.buf.rename, "Rename")
-          map("grn", vim.lsp.buf.rename, "Rename")
-          map("gra", vim.lsp.buf.code_action, "Code Action", { "n", "x" })
-          map("grr", require("telescope.builtin").lsp_references, "References")
-          map("gri", require("telescope.builtin").lsp_implementations, "Implementations")
-          map("grd", require("telescope.builtin").lsp_definitions, "Definitions")
-          map("grD", vim.lsp.buf.declaration, "Declaration")
+          map("gd", vim.lsp.buf.definition, "Goto Definition")
+          map("gD", vim.lsp.buf.declaration, "Goto Declaration")
+          map("gh", vim.lsp.buf.hover, "Hover Documentation")
+
+          map("<leader>rn", vim.lsp.buf.rename, "Rename Symbol")
+          map("<leader>ca", vim.lsp.buf.code_action, "Code Action")
+
+          map("grr", require("telescope.builtin").lsp_references, "Search References")
+          map("gri", require("telescope.builtin").lsp_implementations, "Search Implementations")
+          map("grd", require("telescope.builtin").lsp_definitions, "Search Definition (Preview)")
+          map("grt", require("telescope.builtin").lsp_type_definitions, "Search Type Definition")
+
           map("gO", require("telescope.builtin").lsp_document_symbols, "Document Symbols")
           map("gW", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace Symbols")
-          map("grt", require("telescope.builtin").lsp_type_definitions, "Type Definitions")
+
+          map("<leader>f", function()
+            vim.lsp.buf.format({ async = true })
+          end, "Format Buffer")
 
           -- Highlight references under cursor
           local client = vim.lsp.get_client_by_id(event.data.client_id)
