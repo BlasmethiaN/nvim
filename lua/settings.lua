@@ -8,14 +8,10 @@ vim.opt.shiftround = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 
-vim.opt.termguicolors = true
 vim.opt.linebreak = true
 vim.opt.mouse = "a"
 
 vim.env.BASH_ENV = vim.fn.expand("~/.bash_functions")
-
--- Colorscheme
-vim.cmd("colorscheme catppuccin_macchiato")
 
 -- Vimtex
 vim.g.vimtex_view_method = "zathura"
@@ -23,7 +19,7 @@ vim.g.vimtex_compiler_method = "latexmk"
 
 local opts = { noremap = true, silent = true }
 local map = vim.keymap.set
-local leader = " "  -- protože vim.g.mapleader = " " v settings.lua
+local leader = " "
 
 -- Disable space in normal mode
 map("n", "<space>", "<nop>", opts)
@@ -70,3 +66,7 @@ map("n", leader .. "f", function() vim.lsp.buf.format({ async = true }) end, opt
 map("n", leader .. "tp", ":Telescope find_files<CR>", opts)
 map("n", leader .. "tl", ":Telescope live_grep<CR>", opts)
 map("n", leader .. "td", ":Telescope diagnostics<CR>", opts)
+
+-- Oil.nvim
+vim.keymap.set("n", "<leader>n", "<CMD>Oil<CR>", { desc = "Open file explorer" })
+vim.keymap.set("n", "<leader>pn", "<CMD>Oil .<CR>", { desc = "Project files" })
