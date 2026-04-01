@@ -43,10 +43,10 @@ local spec = lush(function(injected_functions)
     WinSeparator { fg = colors.blue.da(40) },
 
     NormalFloat { bg = colors.bg, fg = colors.yellow }, -- The gh background
-    FloatBorder { fg = colors.cyan, bg = colors.bg },                         -- The "Cyber" border
+    FloatBorder { fg = colors.cyan, bg = colors.bg },   -- The "Cyber" border
     FloatTitle { fg = colors.cyan, gui = "bold" },
 
-    NormalNC    { bg = colors.bg },
+    NormalNC { bg = colors.bg },
 
     sym("@text") { fg = colors.yellow },
     sym("@text.literal") { fg = colors.green },            -- Code blocks in docs
@@ -64,6 +64,25 @@ local spec = lush(function(injected_functions)
 
     DiagnosticUnderlineError { gui = "undercurl", sp = colors.red },
     DiagnosticUnderlineWarn { gui = "undercurl", sp = colors.yellow_soft },
+
+    SignifySignAdd { fg = colors.green },
+    SignifySignChange { fg = colors.yellow_soft },
+    SignifySignDelete { fg = colors.red },
+
+    CmpGhostText { fg = colors.blue.da(60), gui = "italic" },
+
+    TelescopeSelection { bg = colors.blue.da(30), fg = colors.bg, gui = "bold" },
+
+    TelescopeSelectionCaret { fg = colors.cyan, bg = colors.blue.da(30) },
+
+    TelescopeMatching { fg = colors.cyan, gui = "bold" },
+
+    TelescopeBorder { sym("FloatBorder") },
+    TelescopePromptBorder { sym("FloatBorder") },
+    TelescopeResultsBorder { sym("FloatBorder") },
+    TelescopePreviewBorder { sym("FloatBorder") },
+
+    TelescopePromptPrefix { fg = colors.red },
   }
 end)
 
