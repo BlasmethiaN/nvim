@@ -84,6 +84,9 @@ return {
         yamlls = {},
         vimls = {},
         marksman = {},
+        clangd = {},
+        taplo = {},
+        haskell_language_server = {},
         lua_ls = {
           settings = {
             Lua = { diagnostics = { globals = { "vim" } } }
