@@ -38,9 +38,32 @@ local spec = lush(function(injected_functions)
     Search { bg = colors.red.da(20), fg = colors.yellow.li(20) },
     IncSearch { bg = colors.yellow, fg = colors.bg },
 
-    Visual { bg = colors.blue.da(60) },       -- Subdued blue selection
+    Visual { bg = colors.blue.da(60) }, -- Subdued blue selection
 
     WinSeparator { fg = colors.blue.da(40) },
+
+    NormalFloat { bg = colors.bg, fg = colors.yellow }, -- The gh background
+    FloatBorder { fg = colors.cyan, bg = colors.bg },                         -- The "Cyber" border
+    FloatTitle { fg = colors.cyan, gui = "bold" },
+
+    NormalNC    { bg = colors.bg },
+
+    sym("@text") { fg = colors.yellow },
+    sym("@text.literal") { fg = colors.green },            -- Code blocks in docs
+    sym("@text.reference") { fg = colors.cyan },           -- Links in docs
+    sym("@text.title") { fg = colors.blue, gui = "bold" }, -- Headers in docs
+    sym("@variable") { fg = colors.yellow },
+    sym("@parameter") { fg = colors.yellow_soft },
+    sym("@property") { fg = colors.cyan },
+    sym("@constructor") { fg = colors.blue },
+
+    DiagnosticError { fg = colors.red },
+    DiagnosticWarn { fg = colors.yellow_soft },
+    DiagnosticInfo { fg = colors.blue },
+    DiagnosticHint { fg = colors.cyan },
+
+    DiagnosticUnderlineError { gui = "undercurl", sp = colors.red },
+    DiagnosticUnderlineWarn { gui = "undercurl", sp = colors.yellow_soft },
   }
 end)
 

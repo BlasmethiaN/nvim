@@ -26,10 +26,24 @@ return {
             vim.keymap.set(mode, keys, func, { buffer = buf, desc = "LSP: " .. desc })
           end
 
+          local border = "rounded"
+
+          vim.lsp.util.open_floating_preview = (function(orig)
+            return function(contents, syntax, opts, ...)
+              opts = opts or {}
+              opts.border = opts.border or border
+              return orig(contents, syntax, opts, ...)
+            end
+          end)(vim.lsp.util.open_floating_preview)
+
+          vim.diagnostic.config({
+            float = { border = border },
+          })
+
           map("gd", vim.lsp.buf.definition, "Goto Definition")
           map("gD", vim.lsp.buf.declaration, "Goto Declaration")
           map("gh", vim.lsp.buf.hover, "Hover Documentation")
-
+          map("gs", vim.lsp.buf.signature_help, "Signature Help")
           map("<leader>rn", vim.lsp.buf.rename, "Rename Symbol")
           map("<leader>ca", vim.lsp.buf.code_action, "Code Action")
 
