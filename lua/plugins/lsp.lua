@@ -2,27 +2,21 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      { "williamboman/mason.nvim", opts = {} },
-      "williamboman/mason-lspconfig.nvim",
-      { "j-hui/fidget.nvim",       opts = {} },
-      "saghen/blink.cmp",
-      "folke/lsp-colors.nvim",
+      { "j-hui/fidget.nvim", opts = {} },
+      "saghen/blink.cmp", -- Auto-completion capabilities
     },
     lazy = false,
     config = function()
-      -- Basic LSP keymaps
-      vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
-      vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, {})
-
-      vim.diagnostic.config {
+      -- 1. Diagnostics Global Config
+      vim.diagnostic.config({
         virtual_text = true,
         signs = true,
         underline = true,
         update_in_insert = false,
         severity_sort = true,
-      }
+      })
 
-      -- LspAttach autocmd for buffer-local mappings
+      -- 2. LspAttach: Keymaps & Autocmds
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("user-lsp-attach", { clear = true }),
         callback = function(event)
@@ -32,6 +26,9 @@ return {
             vim.keymap.set(mode, keys, func, { buffer = buf, desc = "LSP: " .. desc })
           end
 
+          -- Mappings
+          map("K", vim.lsp.buf.hover, "Hover Documentation")
+          map("<space>rn", vim.lsp.buf.rename, "Rename")
           map("grn", vim.lsp.buf.rename, "Rename")
           map("gra", vim.lsp.buf.code_action, "Code Action", { "n", "x" })
           map("grr", require("telescope.builtin").lsp_references, "References")
@@ -61,17 +58,16 @@ return {
           -- Toggle inlay hints
           if client and client.supports_method("textDocument/inlayHint") then
             map("<leader>th", function()
-              vim.lsp.inlay_hint.enable(
-                not vim.lsp.inlay_hint.is_enabled({ bufnr = buf })
-              )
+              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = buf }))
             end, "Toggle Inlay Hints")
           end
         end,
       })
 
-      -- LSP capabilities from blink.cmp
+      -- 3. Capabilities from blink.cmp
       local capabilities = require("blink.cmp").get_lsp_capabilities()
 
+      -- 4. Server Configuration List
       local servers = {
         bashls = {},
         cssls = {},
@@ -87,12 +83,12 @@ return {
         clangd = {},
         taplo = {},
         haskell_language_server = {},
+        nil_ls = {},
         lua_ls = {
           settings = {
-            Lua = { diagnostics = { globals = { "vim" } } }
-          }
+            Lua = { diagnostics = { globals = { "vim" } } },
+          },
         },
-        nil_ls = {},
       }
 
       for server, opts in pairs(servers) do
@@ -101,11 +97,6 @@ return {
         vim.lsp.config(server, opts)
         vim.lsp.enable(server)
       end
-
-      require("mason").setup()
-      require("mason-lspconfig").setup({
-        ensure_installed = {},
-      })
     end,
   },
 }
